@@ -8,6 +8,8 @@
 
     <?php
         require_once __DIR__ . "/functions.php";
+
+        session_start();
     ?>
 </head>
 <body>
@@ -28,10 +30,12 @@
         <?php
 
             $psw_lng = $_GET["psw_lng"] ?? -1;
-            echo "lng: " . $psw_lng;
 
-            $psw = getPsw($psw_lng);
-            
+            if($psw_lng > 0) {
+    
+                $_SESSION["psw"] = getPsw($psw_lng);
+                header("Location: thankyou.php");
+            }
         ?>
 
         <br><br>
