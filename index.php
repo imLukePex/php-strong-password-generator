@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <title>PHP Strong Password Generator</title>
+
+    <?php
+        require_once __DIR__ . "/functions.php";
+    ?>
 </head>
 <body>
 
@@ -16,36 +20,26 @@
 
     <div class="container">
         <form style="display: flex; justify-content: center; margin-top: 40px;">
-            <label for="password-length">Scegli lunghezza password:</label>
-            <input type="number" name="password_length" min="0" max="100">
-            <input type="submit" value="SUBMIT">
+            <label for="psw_lng">Scegli lunghezza password:</label>
+            <input type="number" name="psw_lng">
+            <input style="margin-left: 10px;" type="submit" value="GENERATE">
         </form>
-    </div>
-    
-    <?php
+        
+        <?php
 
-        if (isset($_GET['password_length'])) {
+            $psw_lng = $_GET["psw_lng"] ?? -1;
+            echo "lng: " . $psw_lng;
 
-            $password_length = $_GET['password_length'];
+            $psw = getPsw($psw_lng);
             
-            $randomPassword = generatePassword($password_length);
+        ?>
 
-            echo "La tua password generata è: " . $randomPassword;
-        }
+        <br><br>
 
-        function generatePassword($length) {
+        <h2 style="color: darkblue; text-align: center;">
+                La tua password è: <?php echo $psw; ?>
+        </h2>
 
-            $alphaCharacters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?=/@#$%&()_+-';
-
-            $password = '';
-
-            for ($i = 0; $i < $length; $i++) {
-                $password .= $alphaCharacters[rand(0, strlen($alphaCharacters) -1)];
-            }
-
-            return $password;
-        }
-    ?>
-
+    </div>
 </body>
 </html>
